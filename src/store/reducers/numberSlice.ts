@@ -18,10 +18,9 @@ const numberSlice = createSlice({
             ...state,
             number: state.number + action.payload
         }),
-        decrement: (state, action : any)=>({
-            ...state,
-            number: state.number - action.payload
-        })
+        decrement: (state, action : PayloadAction<number>)=>{ //if i remove the '()' dont need to spread the other values to the state.
+            state.number -= action.payload
+        }
     }
 })
 

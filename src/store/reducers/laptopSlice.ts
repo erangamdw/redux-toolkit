@@ -14,10 +14,9 @@ const laptopSlice = createSlice({
     name: "laptop",
     initialState,
     reducers:{
-        addLaptop:(state, action: any)=>({
-            ...state,
-            count: state.count + action.payload,
-        }),
+        addLaptop:(state, action: any)=>{ //if i remove the '()' dont need to spread the other values to the state.
+            state.count += action.payload
+        },
         removeLaptop:(state, action: any)=>({
             ...state,
             count: state.count - action.payload,
