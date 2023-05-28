@@ -1,17 +1,23 @@
 import React from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import './App.css';
-import { decrement, increment } from './store/reducers/numberSlice';
+import { decrement, increment, numberSliceSelector } from './store/reducers/numberSlice';
+import LaptopComponent from './components/laptopComponent';
+
 
 function App() {
-  const number = useSelector((store:any)=>store.numberSlice.number)
+  const numberSelector = useSelector(numberSliceSelector)
   const dispatch = useDispatch()
   return (
     <div className="App">
-      <h1>{number}</h1>
+      <h1>{numberSelector.number}</h1>
       <div>
         <button onClick={()=>dispatch(increment(1))}>Increment</button>
         <button onClick={()=>dispatch(decrement(1))}>Decrement</button>
+      </div>
+      <br />
+      <div>
+        <LaptopComponent/>
       </div>
     </div>
   );

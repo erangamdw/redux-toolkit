@@ -1,29 +1,48 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-interface laptopState {
-    count: number;
-    brand: string[]; // Example type for `computers`
-}
+interface LaptopState {
+    id: any;
+    price: number;
+    specs: {
+      cpu: string;
+      gen: number;
+      ram: string;
+      hdd: string;
+    };
+  }
 
-const initialState: laptopState = {
-    count: 10,
-    brand: ['Dell', 'Hp']
-}
+const initialState: LaptopState[] = [
+    {
+        id: 1,
+        price: 250000,
+        specs:{
+            cpu: 'i3',
+            gen: 13,
+            ram:'8GB DDR4',
+            hdd:'1TB',
+        }
+    },
+]
+
+
 
 const laptopSlice = createSlice({
     name: "laptop",
     initialState,
     reducers:{
-        addLaptop:(state, action: any)=>{ //if i remove the '()' dont need to spread the other values to the state.
-            state.count += action.payload
+        addLaptop: (state, action: PayloadAction<LaptopState>) => {
+            state.push(action.payload);
         },
-        removeLaptop:(state, action: any)=>({
-            ...state,
-            count: state.count - action.payload,
-        })
+        // removeLaptop:(state, action: any)=>({
+        //     ...state,
+        //     count: state.count - action.payload,
+        // })
     }
 }
 )
 
-export const {addLaptop, removeLaptop} = laptopSlice.actions;
+//selectors
+export const laptopSliceSelector = (store: any)=>store.laptopSlice
+
+export const {addLaptop, } = laptopSlice.actions;
 export default laptopSlice.reducer
