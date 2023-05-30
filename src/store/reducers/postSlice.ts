@@ -15,6 +15,7 @@ const initialState: postState = {
 
 //thunk waladi dispatch karaddi call karanneth meka     // dispatch karaddi parameter ekak ganna/ parse karanna onenm eka ganne async eke () walata
 export const getPosts = createAsyncThunk('getPosts', async ()=>{
+    //try catch one na
 const res = await fetch('https://jsonplaceholder.typicode.com/posts')
     const data = await res.json();
     if(data){
