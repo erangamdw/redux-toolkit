@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface postState {
     data: string[];
@@ -59,6 +59,7 @@ const postSlice = createSlice({
     }
 })
 
-export const selectAllPosts = (store:any)=> store.post
+const seltAllPosts = (store:any)=> store.post
+export const selectAllPosts = createSelector([seltAllPosts],(post)=> post)
 
 export default postSlice.reducer;
