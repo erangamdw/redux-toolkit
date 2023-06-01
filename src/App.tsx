@@ -8,6 +8,7 @@ import { getPosts, selectAll, selectIds, selectPostLoading, updatePost } from '.
 import { increment2, number2Selector } from './store/reducers/number2Slice';
 import Post from './components/post';
 import {getUsers} from './store/reducers/userSlice'
+import UseReducerComp from './components/useReducer';
 
 
 function App() {
@@ -58,6 +59,8 @@ function App() {
         {/* {selectPost.map((post)=> <Post key={post.id} ele={post}/>)}  */}
         {selectPost.map((postId) => <Post key={postId} postId={postId} />)}
       </div>
+      <hr /><hr /><hr /><hr />
+      <UseReducerComp/>
     </div>
   );
 }
