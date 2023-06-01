@@ -1,22 +1,27 @@
-import { createAsyncThunk, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createEntityAdapter, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface postState {
     data: string[];
     loading: string,
     error: string // Example type for `computers`
 }
+ 
+const postState = createEntityAdapter({
+    selectId: (ele:any)=>ele.id
+})
 
-const initialState: postState = {
-    data: [],
+//entitiy adaptor eken Ids, entities kiyala state eka order wenawa, eken parse wena initialstate eka pahala assign karanawa,
+// amathara data tikath assign karanawa optionl object ekak widihata
+const initialState = postState.getInitialState({
     loading: 'idle', 
     error: ''
-}
+})
 
 
 //thunk waladi dispatch karaddi call karanneth meka     // dispatch karaddi parameter ekak ganna/ parse karanna onenm eka ganne async eke () walata
 export const getPosts = createAsyncThunk('getPosts', async ()=>{
     //try catch one na
-const res = await fetch('https://jsonplaceholder.typicode.csom/posts')
+const res = await fetch('https://jsonplaceholder.typicode.com/posts')
     const data = await res.json();
     if(Array.isArray(data)){
         return data;
@@ -30,7 +35,11 @@ const postSlice = createSlice({
     name: "post-slice",
     initialState,
     reducers:{
-        
+        // updatePost:(state, action)=>{
+        //     postState.updateOne(state,action.payload)
+        // }
+        //entities use karaddi  reducers action creators simplyfy karanna pluwan
+        updatePost: postState.updateOne
     },
     //for external reducer & async data when use external action fucntions =>eliyen hadapu functions ganne extra reducers walin, API call karaddi
 
@@ -47,7 +56,8 @@ const postSlice = createSlice({
                 state.loading = 'failed'
             }else{
                 state.loading = "completed";
-                state.data = action.payload
+                // state.data = action.payload
+                postState.addMany(state,action.payload)
             }
             
         })
@@ -59,7 +69,18 @@ const postSlice = createSlice({
     }
 })
 
-const seltAllPosts = (store:any)=> store.post
-export const selectAllPosts = createSelector([seltAllPosts],(post)=> post)
+// const seltAllPosts = (store:any)=> store.post
+export const selectPostLoading = createSelector([store=>store.post.loading],(loading)=>loading)
+// export const selectAllPosts = createSelector([seltAllPosts],(post)=> post)
 
+export const {
+    selectIds,
+    selectAll,
+    selectById,
+    selectEntities,
+    selectTotal
+} = postState.getSelectors((store:any)=>store.post)
+
+
+export const {updatePost} = postSlice.actions
 export default postSlice.reducer;

@@ -26,7 +26,7 @@ export const increment2 = createAction<{ name: string; value: number }>(//payloa
 export const decrement2 = createAction<number>('number2/decrement')
 
 export const getUsers = createAsyncThunk('number2/getUsers', async()=>{
-    const res = await fetch('https://jsonplaceholder.typicode.csom/users')
+    const res = await fetch('https://jsonplaceholder.typicode.com/users')
     const data = await res.json();
     if(Array.isArray(data)){
         return data
